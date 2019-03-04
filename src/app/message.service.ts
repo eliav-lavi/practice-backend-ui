@@ -12,11 +12,6 @@ export class MessageService {
   messages: Message[] = [this.introMessage];
   enabled: boolean = true;
 
-  // add(messageContent: string) {
-  //   const message = new Message(messageContent)
-  //   this.messages.push(message)
-  // }
-
   info(messageContent: string) {
     if (this.enabled) {
       const message = new Message(messageContent, MessageType.Info);
