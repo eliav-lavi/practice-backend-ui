@@ -1,0 +1,23 @@
+<div class="row no-gutters w-100 h-100 ">
+  <div #messageBox class="col-11 h-100" id="messages">
+    <ul>
+      <small>
+        <li *ngFor="let message of messageService.messages">
+          <code class="timestamp">{{message.timestamp.format("MMM-D-YYYY, hh:mm:ss a")}}: </code>
+          <code class="content" [ngClass]="getClass(message.type)">{{message.content}}</code>
+        </li>
+      </small>
+    </ul>
+  </div>
+  <div class="col-1 text-right pr-2">
+      <div class="btn-group-vertical h-100">
+          <button class="btn btn-sm btn-light btn-block" (click)="clearMessages()">
+              <fa-icon icon="trash-alt" title="Purge messages" id="trash"></fa-icon>
+          </button>
+          <button class="btn btn-sm btn-light btn-block" (click)="toggleEnabled()">
+              <fa-icon *ngIf="enabled()" icon="pause-circle" title="Pause message logging" id="pause"></fa-icon>
+              <fa-icon *ngIf="!enabled()" icon="play-circle" title="Resume message logging" id="resume"></fa-icon>
+          </button>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="row no-gutters h-100 sidebar">
+    <div class="row logo no-gutters w-100">
+        <div class="col">
+            <div class="sidebar-header">
+                <a routerLink="/welcome">
+                    <img src="../assets/images/tmp_logo.png" class="img-fluid" id="logo">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row nav-tree no-gutters w-100">
+        <div class="col">
+            <app-nav-tree [treeData]="navigationTree"></app-nav-tree>
+        </div>
+    </div>
+    <div class="row configure-server-btn align-items-center no-gutters w-100">
+        <div class="col text-center">
+            <span *ngIf="serverConfigured(); else serverNotConfigured">
+                <button class="btn btn-sm btn-light" (click)="openModal(configureServerModal)">
+                    Reconfigure Server
+                </button>
+            </span>
+            <ng-template #serverNotConfigured>
+                <button class="btn btn-warning" (click)="openModal(configureServerModal)">
+                    Configure Server
+                </button>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+<!-- New Modal -->
+<ng-template #configureServerModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Configure Server</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="form">
+            <div class="row align-items-center">
+                <div class="col">
+                    <label class="mr-2">Server URL</label>
+                </div>
+                <div class="col">
+                    <ng-template #serverUrlTip>
+                        Current URL: <code>{{ serverUrl }}</code>
+                    </ng-template>
+                    <input #suppliedServerUrl type="text" class="form-control mb-2 mr-sm-2" id="serverUrl"
+                        placeholder="http://localhost:3000" [ngbTooltip]="serverUrlTip">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" (click)="configureServer(suppliedServerUrl.value); modal.close()" class="btn btn-primary"
+            data-dismiss="modal">Configure Server</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.dismiss()">Discard</button>
+    </div>
+</ng-template>
+<!-- End of New Modal -->

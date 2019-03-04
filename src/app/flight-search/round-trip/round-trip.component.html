@@ -1,0 +1,61 @@
+<div class="row">
+  <app-instructions [instructions]="instructions" [apis]="challengeApis" class="w-100"></app-instructions>
+</div>
+<div class="row">
+  <div class="col-3 pl-0">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="btn btn-outline-secondary">
+          <fa-icon icon="plane-departure"></fa-icon>
+        </span>
+      </div>
+      <input #origin id="origin" type="text" class="form-control" [ngbTypeahead]="browseCities"
+        (focus)="focus$.next($event.target.value); this.value=''" (click)="click$.next($event.target.value)"
+        #instance="ngbTypeahead" placeholder="Origin City" />
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="btn btn-outline-secondary">
+          <fa-icon icon="plane-arrival"></fa-icon>
+        </span>
+      </div>
+      <input #destination id="destination" type="text" class="form-control" [ngbTypeahead]="browseCities"
+        (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #instance="ngbTypeahead"
+        placeholder="Destination City" />
+    </div>
+  </div>
+  <div class="col-5">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="btn btn-outline-secondary">
+          <fa-icon icon="calendar-alt"></fa-icon>
+        </span>
+      </div>
+
+      <input #departureDate class="form-control" (click)="departureDatepicker.toggle()" placeholder="yyyy-mm-dd"
+        name="dp" ngbDatepicker #departureDatepicker="ngbDatepicker" [minDate]="{year: 2008, month: 3, day: 1}"
+        [maxDate]="{year: 2008, month: 3, day: 30}">
+      <input #returnDate class="form-control" (click)="returnDatepicker.toggle()" placeholder="yyyy-mm-dd" name="dp"
+        ngbDatepicker #returnDatepicker="ngbDatepicker" [minDate]="{year: 2008, month: 3, day: 1}"
+        [maxDate]="{year: 2008, month: 3, day: 30}">
+    </div>
+  </div>
+  <div class="col-1">
+    <button (click)="search(origin.value, destination.value, departureDate.value, returnDate.value)"
+      class="btn btn-primary mb-2">
+      Search
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div *ngIf="trips !== undefined" class="w-100">
+    <div *ngFor="let trip of getPageTrips()" class="card my-3 pl-4">
+      <app-trip-result [trip]="trip" [airports]="this.pickAirports(trip)"></app-trip-result>
+    </div>
+    <ngb-pagination [collectionSize]="trips.length" [(page)]="tripsPage" [(pageSize)]="pageSize" [maxSize]="5"
+      [rotate]="true"></ngb-pagination>
+  </div>
+</div>

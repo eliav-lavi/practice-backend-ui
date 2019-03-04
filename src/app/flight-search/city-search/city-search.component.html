@@ -1,0 +1,55 @@
+<div class="row">
+  <app-instructions [instructions]="instructions" [apis]="challengeApis" class="w-100"></app-instructions>
+</div>
+<div class="row">
+  <div class="col pl-0">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="btn btn-outline-secondary">
+          <fa-icon icon="plane-departure"></fa-icon>
+        </span>
+      </div>
+      <input #origin id="origin" type="text" class="form-control" [ngbTypeahead]="browseCities"
+        (focus)="focus$.next($event.target.value); this.value=''" (click)="click$.next($event.target.value)"
+        #instance="ngbTypeahead" placeholder="Origin City" />
+    </div>
+  </div>
+  <div class="col">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="btn btn-outline-secondary">
+          <fa-icon icon="plane-arrival"></fa-icon>
+        </span>
+      </div>
+      <input #destination id="destination" type="text" class="form-control" [ngbTypeahead]="browseCities"
+        (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #instance="ngbTypeahead"
+        placeholder="Destination City" />
+    </div>
+  </div>
+  <div class="col">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="btn btn-outline-secondary">
+          <fa-icon icon="calendar-alt"></fa-icon>
+        </span>
+      </div>
+      <input #departureDate class="form-control" (click)="datepicker.toggle()" placeholder="yyyy-mm-dd" name="dp"
+        ngbDatepicker #datepicker="ngbDatepicker" [minDate]="{year: 2008, month: 3, day: 1}"
+        [maxDate]="{year: 2008, month: 3, day: 30}">
+    </div>
+  </div>
+  <button (click)="search(origin.value, destination.value, departureDate.value)" class="btn btn-primary mb-2">
+    Search
+  </button>
+</div>
+
+<div class="row">
+  <div *ngIf="journeys !== undefined" class="w-100">
+    <div *ngFor="let journey of getPageJourneys()" class="card my-3 pl-4">
+      <app-single-flight-result [journey]="journey" [originAirport]="getOriginAirportForFlight(journey)"
+        [destinationAirport]="getDestinationAirportForFlight(journey)"></app-single-flight-result>
+    </div>
+    <ngb-pagination [collectionSize]="journeys.length" [(page)]="journeysPage" [(pageSize)]="pageSize" [maxSize]="5"
+      [rotate]="true"></ngb-pagination>
+  </div>
+</div>

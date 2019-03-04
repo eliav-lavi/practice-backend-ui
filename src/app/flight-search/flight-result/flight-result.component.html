@@ -1,0 +1,16 @@
+<div class="row" ngClass="{{ !lastItem ? 'mb-3' : '' }}">
+  <div class="col-2">
+    <fa-icon icon="plane" size="2x"></fa-icon>
+  </div>
+  <div class="col-6">
+    <p class="card-text mb-0"><strong>
+        {{ this.flight.getLocalDepartureDatetime(this.originAirport().timezone).format('HH:mm') }} - {{
+        this.flight.getLocalArrivalDatetime(this.destinationAirport().timezone).format('HH:mm') }}
+      </strong></p>
+    <p class="card-text text-muted">{{ this.flight.uniqueCarrier }}</p>
+  </div>
+  <div class="col-4">
+    <p class="card-text mb-0"><strong>{{ flight.getHours() }}h {{ flight.getMinutes() }}m</strong></p>
+    <p class="card-text text-muted">{{ this.flight.origin }} - {{ this.flight.destination }}</p>
+  </div>
+</div>

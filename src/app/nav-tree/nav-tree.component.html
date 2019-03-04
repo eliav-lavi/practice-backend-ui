@@ -1,0 +1,10 @@
+<ul>
+  <li *ngFor="let node of treeData">
+    <a *ngIf="node.link != null" (click)="handleClick(node)" routerLink="{{node.link}}" [class.active-terminal]="node == activeNode">{{node.title}}</a>
+    <a *ngIf="node.link == null" (click)="handleClick(node)">{{node.title}}</a>
+    <div *ngIf="activeNode == node">
+      <app-nav-tree [treeData]="node.children">
+      </app-nav-tree>
+    </div>
+  </li>
+</ul>

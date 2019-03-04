@@ -1,0 +1,24 @@
+.main {
+    overflow: scroll;
+    display: block;
+    height: 90%;
+    // margin-bottom:1em; // this is needed but pushes msgs down, consult css masters
+    padding-top: 4em;
+    padding-bottom: 1em;
+    padding-left: 5em;
+    padding-right: 5em;
+    background: white;
+    border-radius: 0px 0px 0px 10px;
+}
+
+.main-container {
+    background: #343a40;
+    display: block;
+}
+
+.messages {
+    height: 10%;
+}
+:host {
+    font-family: 'Open Sans', sans-serif;
+}

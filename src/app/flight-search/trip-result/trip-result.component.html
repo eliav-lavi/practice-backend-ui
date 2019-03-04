@@ -1,0 +1,14 @@
+<div class="card-body">
+  <div class="row align-items-center">
+    <div class="col-10">
+      <div *ngFor="let tripPart of trip.tripParts; let lastItem = last;">
+        <div class="row w-100" ngClass="{{ !lastItem ? 'mb-3' : '' }}">
+          <app-trip-part-result [tripPart]="tripPart" [airports]="airports" style="width: 100%;"></app-trip-part-result>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <h4 class="card-text"><strong>{{ trip.price | number: '0.0-0' }}$</strong></h4>
+    </div>
+  </div>
+</div>

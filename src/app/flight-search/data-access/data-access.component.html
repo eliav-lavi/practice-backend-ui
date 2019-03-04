@@ -1,0 +1,60 @@
+<div class="row">
+  <app-instructions [instructions]="instructions" [apis]="challengeApis" class="w-100"></app-instructions>
+</div>
+<div class="row">
+  <ngb-accordion [closeOthers]="true" #acc="ngbAccordion" class="w-100">
+    <ngb-panel title="Browse airline records">
+      <ng-template ngbPanelContent>
+        <button class="btn btn-primary" (click)="getAirlines()">Get All Airlines</button>
+        <div *ngIf="airlines !== undefined" class="mt-3">
+          <div *ngFor="let airline of getPageAirlines()" class="card my-3 pl-4">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-2">
+                  <fa-icon icon="paper-plane" size="2x"></fa-icon>
+                </div>
+                <div class="col-7">
+                  <p class="card-text mb-0"><strong>{{ airline.name }}</strong></p>
+                  <p class="card-text text-muted">{{ airline.code }}</p>
+                </div>
+                <div class="col-3 text-center">
+                  <img src="{{ airline.logoUrl }}" class="img-fluid" style="max-width: 8vw; max-height: 8vh ">
+                </div>
+              </div>
+            </div>
+          </div>
+          <ngb-pagination [collectionSize]="airlines.length" [(page)]="airlinesPage" [(pageSize)]="pageSize"
+            [maxSize]="5" [rotate]="true"></ngb-pagination>
+        </div>
+
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel title="Browse airport records">
+      <ng-template ngbPanelContent>
+        <button class="btn btn-primary" (click)="getAirports()">Get All Airports</button>
+        <div *ngIf="airports !== undefined" class="mt-3">
+          <div *ngFor="let airport of getPageAirports()" class="card my-3 pl-4">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-2">
+                  <fa-icon icon="passport" size="2x"></fa-icon>
+                </div>
+                <div class="col-6">
+                  <p class="card-text  mb-0"><strong>{{ airport.iata }}</strong></p>
+                  <small class="card-text text-muted">{{ airport.name }}</small>
+                </div>
+                <div class="col-4 ">
+                  <p class="card-text  mb-0"><strong>{{ airport.city }}</strong></p>
+                  <small class="card-text text-muted">{{ airport.country }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ngb-pagination [collectionSize]="airports.length" [(page)]="airportsPage" [(pageSize)]="pageSize"
+            [maxSize]="5" [rotate]="true"></ngb-pagination>
+        </div>
+
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>

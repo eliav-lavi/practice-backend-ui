@@ -1,0 +1,94 @@
+<div class="card w-100 mb-4">
+  <div class="card-body">
+    <div class="row ml-0 h2 mb-0" id="title" (click)="toggleInstructionsIsCollapsed()">
+      <div class="col" id="arrow">
+        <span class="mr-2">
+          <fa-icon icon="caret-right" *ngIf="!instructionsIsCollapsed" title="Show less"></fa-icon>
+          <fa-icon icon="caret-down" *ngIf="instructionsIsCollapsed" title="Show more"></fa-icon>
+        </span>
+      </div>
+      <div class="col">
+        Challenge: {{ instructions.title }}
+      </div>
+    </div>
+    <div id="instructions" [ngbCollapse]="instructionsIsCollapsed" class="mt-2">
+      <div class="row mx-2">
+        <p class="lead" id="goal">
+          <strong>Goal:</strong> {{ instructions.goal }}
+        </p>
+        <p *ngFor="let paragraph of instructions.paragraphs">
+          {{ paragraph }}
+        </p>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="text-center">
+          <button class="btn btn-primary" (click)="openModalLarge(viewApiModal)">View API Spec</button>
+        </div>
+
+        <!-- Modal -->
+        <ng-template #viewApiModal let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title">API Specifications</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body">
+              <div *ngFor="let api of apis">
+                <ngb-accordion [closeOthers]="true" #acc="ngbAccordion" activeIds="bar">
+                  <ngb-panel title="{{ api.name }}">
+                    <ng-template ngbPanelContent>
+                      <div>
+                        <p>
+                          <span class="badge badge-success"><samp>{{ api.type | uppercase }}</samp></span>&nbsp;
+                          <samp>{{ api.path }}</samp>
+                        </p>
+                      </div>
+
+                      <ngb-accordion [closeOthers]="true" #acc="ngbAccordion" activeIds="general-info">
+                        <ngb-panel title="Requested Parameters" [disabled]="api.requestedParameters.length == 0">
+                          <ng-template ngbPanelContent>
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Type</th>
+                                  <th scope="col">Description</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let requestedParameter of api.requestedParameters">
+                                  <td>
+                                    <pre><code>{{ requestedParameter.name }}</code></pre>
+                                  </td>
+                                  <td>{{ requestedParameter.type }}</td>
+                                  <td>{{ requestedParameter.description }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </ng-template>
+                        </ngb-panel>
+
+                        <ngb-panel title="Expected Response" [disabled]="!api.expectedResponse">
+                          <ng-template ngbPanelContent>
+                            <pre><code>
+                                  {{ api.expectedResponse }}
+                              </code></pre>
+                          </ng-template>
+                        </ngb-panel>
+                      </ngb-accordion>
+                    </ng-template>
+                  </ngb-panel>
+                </ngb-accordion>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <!-- End of Modal -->
+
+      </div>
+    </div>
+  </div>
+</div>
