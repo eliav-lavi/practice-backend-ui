@@ -8,5 +8,6 @@
 
 * Clone this repo to your local machine.
 * Make sure angular-cli is installed on your machine with  `npm install -g @angular/cli`.
+* Install dependencies with `npm install`.
 * Serve *Practice Backend* with `ng serve`.
 * Follow the instructions that appear on the welcome page.
